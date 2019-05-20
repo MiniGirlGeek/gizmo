@@ -2,6 +2,7 @@ import PIL
 from PIL import Image
 import numpy as np
 from math import floor
+import datetime
 
 im1 = Image.open('test3.png')
 im2 = Image.open('test4.png')
@@ -29,12 +30,19 @@ def get_centre(image):
 
 threshold = 50
 
-im1_ = PIL.Image.eval(im1, lambda a: 255 if a > threshold else 0)
-im1_.save('test3_.png')
-c1 = get_centre(im1_)
+rescale = 0.6
+t1 = datetime.datetime.now()
+for i in range(25):
+	im1_ = PIL.Image.eval(im1, lambda a: 255 if a > threshold else 0)
+	im1_ = im1_.resize((round(rescale*399), round(rescale*239)))
+	im1_.save('test3_.png')
+	c1 = get_centre(im1_)
+t2 = datetime.datetime.now()
+print(t2-t1)
 print(c1)
 
 im2_ = PIL.Image.eval(im2, lambda a: 255 if a > threshold else 0)
+im2_ = im2_.resize((round(rescale*399), round(rescale*239)))
 im2_.save('test4_.png')
 c2 = get_centre(im2_)
 print(c2)
